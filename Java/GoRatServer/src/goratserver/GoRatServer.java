@@ -3,6 +3,7 @@ package goratserver;
 import com.illposed.osc.*;
 import java.util.Date;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 class GoRatServer {
@@ -19,7 +20,9 @@ class GoRatServer {
             server = new OSCPortIn(32000);
             this.addListeners();
             server.startListening();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
     }
     
@@ -39,6 +42,32 @@ class GoRatServer {
             }
         };
         server.addListener("/keyRelease", listener2);
+        
+        OSCListener listener3 = new OSCListener() {
+            public void acceptMessage(Date date, OSCMessage oscm) {
+                Object[] args = oscm.getArguments();
+                robot.mouseMove((int) args[0], (int) args[1]);
+            }
+        };
+        server.addListener("/mouseMove", listener3);
+        
+        OSCListener listener4 = new OSCListener() {
+            public void acceptMessage(Date date, OSCMessage oscm) {
+                Object[] args = oscm.getArguments();
+                robot.mouseMove((int) args[0], (int) args[1]);
+                robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            }
+        };
+        server.addListener("/mousePress", listener4);
+        
+        OSCListener listener5 = new OSCListener() {
+            public void acceptMessage(Date date, OSCMessage oscm) {
+                Object[] args = oscm.getArguments();
+                robot.mouseMove((int) args[0], (int) args[1]);
+                robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            }
+        };
+        server.addListener("/mouseRelease", listener5);
     }
 
 }
