@@ -21,7 +21,7 @@ void setup()
   serverSize = new PVector(int(lines[0]), int(lines[1]));
   ratio[0] = serverSize.x/clientSize.x;
   ratio[1] = serverSize.y/clientSize.y;
-
+  
   size(int(clientSize.x), int(clientSize.y));
   frameRate(20);
   background(100);
@@ -29,12 +29,7 @@ void setup()
   server = new NetAddress(lines[2], int(lines[3]));
 }
 
-void draw()
-{
-  background(100);
-  ellipseMode(CENTER);
-  ellipse(mouseX, mouseY, 10, 10);
-}
+void draw() {}
 
 // This one just send mouse position
 void sendMessage(String pattern)
@@ -53,6 +48,7 @@ void sendMessage(String pattern, int value)
   msg.add(int(mouseY*ratio[1]));
   msg.add(value);
   osc.send(msg, server);
+  println(value);
 }
 
 void mouseMoved()
@@ -74,4 +70,8 @@ void mouseReleased()
 void keyPressed()
 {
   sendMessage("/keyPress", keyCode);
+}
+void keyReleased()
+{
+  sendMessage("/keyRelease", keyCode);
 }
