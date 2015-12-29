@@ -1,3 +1,3 @@
-/Java/GoRatServer/nbproject/private/
-/Java/GoRatServer/build/
-/Java/GoRatServer/dist/
+.DS_Store
+node_modules
+*.log

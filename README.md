@@ -1,10 +1,34 @@
-goRat! (and keyboard!)
+# goRat!
 
-What is this?
-Control mouse and keybord of a computer by sending OSC messages to it.
+Expose keyboard and mouse control via websocket.
 
-Running with Processing:
-- Install Processing (we used 2.0b7). You can find it in www.processing.org.
-- Unpack the libraries from the repository to your sketchbook libraries folder.
-- Unpack "goRatClient" and "goRatServer" to your sketchbook folder.
-- Open Processing and run it or export application
+## On Server
+
+```js
+var app = require( 'express' )();
+var http = require( 'http' ).Server( app );
+var io = require( 'socket.io' )( http );
+var robot = require( 'robotjs' );
+io.on('connection', function( socket ){
+	socket.on( 'mousemove', function( posX, posY ) {
+		robot.moveMouseSmooth( posX, posY );
+	});
+});
+http.listen( 3000, function(){
+  console.log('listening on *:3000');
+});
+```
+
+## On Client
+
+```html
+<script type="text/javascript" src="socket.io.js"></script>
+<script>
+var socket = io();
+socket.emit( 'mousemove', 100, 100 );
+</script>
+```
+
+## Example
+
+Run `npm install` and `node app.js` on the root path of this repository and open the brower on `http://localhost:3000`.

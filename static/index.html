@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>goRat!</title>
+		<script type="text/javascript" src="socket.io.js"></script>
+		<script type="text/javascript" src="jquery.min.js"></script>
+		<script type="text/javascript" src="jquery.mobile.min.js"></script>
+		<script>
+		var socket = io();
+		$( document ).ready( function() {
+			// var buttons = {
+			// 	"1": "left",
+			// 	"3": "right"
+			// };
+			// $( window ).on( 'mousemove', function( e ) {
+			// 	socket.emit( 'mousemove', e.pageY, e.pageX );
+			// 	console.log( 'mousemove', e.pageY, e.pageX );
+			// })
+			// .on( 'mousedown', function( e ) {
+			// 	socket.emit( 'mousedown', buttons[ e.which ] );
+			// 	console.log( 'mousedown', buttons[ e.which ] );
+			// })
+			// .on( 'mouseup', function( e ) {
+			// 	socket.emit( 'mouseup', buttons[ e.which ] );
+			// 	console.log( 'mouseup', buttons[ e.which ] );
+			// });
+		})
+		</script>
+	</head>
+	<body>
+		<h1>Helo, World!</h1>
+		<ul>
+			<li><a href="javascript:socket.emit( 'mousemove', 0, 0 );">Top left</a></li>
+			<li><a href="javascript:socket.emit( 'mousemove', 100, 100 );socket.emit( 'mousemove', 300, 100 )">Swipe Right</a></li>
+			<li><a href="javascript:socket.emit( 'mousemove', 300, 100 );socket.emit( 'mousemove', 100, 100 )">Swipe Left</a></li>
+		</ul>
+	</body>
+</html>
