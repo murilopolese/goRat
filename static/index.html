@@ -4,36 +4,43 @@
 		<meta charset="utf-8">
 		<title>goRat!</title>
 		<script type="text/javascript" src="socket.io.js"></script>
-		<script type="text/javascript" src="jquery.min.js"></script>
-		<script type="text/javascript" src="jquery.mobile.min.js"></script>
 		<script>
 		var socket = io();
-		$( document ).ready( function() {
-			// var buttons = {
-			// 	"1": "left",
-			// 	"3": "right"
-			// };
-			// $( window ).on( 'mousemove', function( e ) {
-			// 	socket.emit( 'mousemove', e.pageY, e.pageX );
-			// 	console.log( 'mousemove', e.pageY, e.pageX );
-			// })
-			// .on( 'mousedown', function( e ) {
-			// 	socket.emit( 'mousedown', buttons[ e.which ] );
-			// 	console.log( 'mousedown', buttons[ e.which ] );
-			// })
-			// .on( 'mouseup', function( e ) {
-			// 	socket.emit( 'mouseup', buttons[ e.which ] );
-			// 	console.log( 'mouseup', buttons[ e.which ] );
-			// });
-		})
+
+		window.onload = function() {
+			console.log( 'load' );
+			var topLeft = document.getElementById( 'topLeft' );
+			var swipeRight = document.getElementById( 'swipeRight' );
+			var swipeLeft = document.getElementById( 'swipeLeft' );
+
+			topLeft.addEventListener( 'click', function( e ) {
+				e.preventDefault();
+				socket.emit( 'mousemove', 0, 0 );
+				return false;
+			}, false )
+
+			swipeRight.addEventListener( 'click', function( e ) {
+				e.preventDefault();
+				socket.emit( 'mousemove', 100, 100 );
+				socket.emit( 'mousemove', 300, 100 )
+				return false;
+			}, false )
+
+			swipeLeft.addEventListener( 'click', function( e ) {
+				e.preventDefault();
+				socket.emit( 'mousemove', 300, 100 );
+				socket.emit( 'mousemove', 100, 100 )
+				return false;
+			}, false )
+		}
 		</script>
 	</head>
 	<body>
 		<h1>Helo, World!</h1>
 		<ul>
-			<li><a href="javascript:socket.emit( 'mousemove', 0, 0 );">Top left</a></li>
-			<li><a href="javascript:socket.emit( 'mousemove', 100, 100 );socket.emit( 'mousemove', 300, 100 )">Swipe Right</a></li>
-			<li><a href="javascript:socket.emit( 'mousemove', 300, 100 );socket.emit( 'mousemove', 100, 100 )">Swipe Left</a></li>
+			<li><a id="topLeft" href="#">Top left</a></li>
+			<li><a id="swipeRight" href="#">Swipe Right</a></li>
+			<li><a id="swipeLeft" href="#">Swipe Left</a></li>
 		</ul>
 	</body>
 </html>
